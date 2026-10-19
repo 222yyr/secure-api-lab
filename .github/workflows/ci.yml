@@ -1,0 +1,27 @@
+name: Security CI Scan
+on:
+  push:
+  pull_request:
+
+jobs:
+  security_scan_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取仓库代码
+        uses: actions/checkout@v4
+
+      - name: 配置Python环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装项目依赖与安全扫描工具
+        run: |
+          pip install -r requirements.txt
+          pip install bandit safety
+
+      - name: SAST Bandit静态代码扫描
+        run: bandit -r .
+
+      - name: SCA Safety第三方依赖漏洞扫描
+        run: safety check
