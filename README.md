@@ -22,17 +22,7 @@ In this experiment: An Nginx reverse proxy is placed in front of Flink. Nginx ru
 
 ![Screenshot 2](./screenshot/2.png)
 
-![Screenshot 3](./screenshot/3.png)
 
-![Screenshot 4](./screenshot/4.png)
-
-![Screenshot 5](./screenshot/5.png)
-
-![Screenshot 6](./screenshot/6.png)
-
-![Screenshot 7](./screenshot/7.png)
-
-![Screenshot 8](./screenshot/8.png)
 
 ## 4. Vulnerability Information
 CVE ID: **CVE-2020-17519**
