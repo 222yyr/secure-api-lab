@@ -18,9 +18,9 @@ This lab demonstrates directory traversal protection with Nginx reverse proxy. B
 In this experiment: An Nginx reverse proxy is placed in front of Flink. Nginx rules block requests containing directory traversal patterns before traffic reaches Flink.
 
 ## 3. SAST / SCA Report Screenshot
-![SAST/SCA report](./screenshot/1.png)
+![SAST/SCA report](./screenshot/14.png)
 
-![Screenshot 2](./screenshot/2.png)
+![Screenshot 2](./screenshot/15.png)
 
 
 
