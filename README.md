@@ -1,4 +1,4 @@
-# CVE-2020-17519 Apache Flink Directory Traversal Lab
+# Secure RESTful API, CI/CD Security Scanning and Vulnerability Remediation Project
 
 ## 1. Project and API Description
 This project uses Docker Compose to build a vulnerable Apache Flink environment for demonstrating the directory traversal vulnerability.
