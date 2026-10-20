@@ -24,5 +24,7 @@ jobs:
         run: bandit -r . || true
 
       - name: SCA Safety第三方依赖漏洞扫描
+        env:
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
         run: safety scan || true
 
