@@ -62,4 +62,4 @@ def profile():
     return jsonify(username=user, note="自定义接口，用户个人资料")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
