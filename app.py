@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -8,7 +9,8 @@ app = Flask(__name__)
 # SQLite数据库，文件存本地lab.db
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///lab.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["JWT_SECRET_KEY"] = "lab‑secret‑demo‑key‑998877"
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+
 
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
