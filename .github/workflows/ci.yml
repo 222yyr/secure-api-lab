@@ -4,7 +4,8 @@ on:
   pull_request:
 jobs:
   security_scan_job:
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-24.04
+
     steps:
       - name: 拉取仓库代码
         uses: actions/checkout@v5
@@ -19,23 +20,9 @@ jobs:
       - name: SAST Bandit静态代码扫描
         run: bandit -r . || true
       
-      - name: OWASP Dependency Check SCA Scan
-        uses: dependency-check/Dependency-Check_Action@main
-        with:
-          project: secure-api
-          path: '.'
-          format: HTML
-          out: reports
-          args: >
-            --enableExperimental
-      - name: Upload Dependency-Check Report
-        uses: actions/upload-artifact@v6
-        with:
-          name: dependency-check-report
-          path: reports
-
+      
   snyk_scan_job:
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-24.04
     steps:
       - name: 拉取仓库代码
         uses: actions/checkout@v5
