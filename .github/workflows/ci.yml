@@ -32,7 +32,7 @@ jobs:
           format: HTML
           out: reports
           args: >
-            --enablePython
+            --enableExperimental
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v6
