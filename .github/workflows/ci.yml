@@ -47,11 +47,12 @@ jobs:
         run: |
           echo "### Snyk Scan Result"
           jq -r '
-            if (.vulnerabilities == null or .vulnerabilities | length == 0)
+            if (.vulnerabilities | type) != "array" or (.vulnerabilities | length == 0)
             then "✅ No vulnerabilities found in this scan"
             else .vulnerabilities[] | "CVE: \(.id) | Severity: \(.severity) | Package: \(.packageName) | Title: \(.title)"
             end
           ' snyk-report.json
+
 
       - name: 转为HTML报告
         run: |
