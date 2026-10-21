@@ -31,8 +31,6 @@ jobs:
           path: '.'
           format: HTML
           out: reports
-          args: >
-            --enablePython
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v5
         with:
