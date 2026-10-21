@@ -24,22 +24,28 @@ jobs:
         run: bandit -r . || true
 
     
-      - name: OWASP Dependency Check SCA Scan
+      # ========= SCA OWASP Dependency‑Check (Lab manual required tool) =========
+      - name: SCA-OWASP Dependency-Check scan
         uses: dependency-check/Dependency-Check_Action@main
         with:
-          project: secure-api
-          path: '.'
-          format: HTML
+          project: "Work1-Secure-REST-API"
+          scan: "."
+          format: "HTML"
           out: reports
+          failOnCVSS: 10
+          autoUpdate: true
           args: >
             --enableExperimental
             --exclude "**/.github/**"
 
-      - name: Upload Dependency-Check Report
-        uses: actions/upload-artifact@v6
+      # 上传HTML报告作为流水线产物 artifact
+      - name: Upload Dependency-Check HTML report artifact
+        uses: actions/upload-artifact@v4
+        if: success() || failure()
         with:
-          name: dependency-check-report
+          name: OWASP-Dependency-Check-Report
           path: reports
+          retention-days: 30
 
 
 
