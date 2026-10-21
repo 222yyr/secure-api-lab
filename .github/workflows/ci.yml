@@ -43,6 +43,12 @@ jobs:
         run: |
           snyk test --json > snyk-report.json || true
 
+      - name: 输出Snyk漏洞摘要
+        run: |
+          npm install -g jq
+          echo "### Snyk 扫描结果"
+          jq '.vulnerabilities[] | {CVE:.id, 危险等级:.severity, 依赖包:.packageName, 描述:.title}' snyk-report.json   
+      
       - name: 转为HTML报告
         run: |
           snyk-to-html -i snyk-report.json -o snyk-report.html
