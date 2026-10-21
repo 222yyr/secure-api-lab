@@ -26,7 +26,7 @@ jobs:
       - name: SCA Safety第三方依赖漏洞扫描
         env:
           SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
-        run: Run safety scan --no-prompt || true
+        run: Run safety scan || true
 
 
 
