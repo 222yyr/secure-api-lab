@@ -2,52 +2,66 @@ name: Security CI Scan
 on:
   push:
   pull_request:
-
 jobs:
   security_scan_job:
     runs-on: ubuntu-latest
     steps:
       - name: 拉取仓库代码
         uses: actions/checkout@v5
-
       - name: 配置Python环境
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-
       - name: 安装项目依赖与安全扫描工具
         run: |
           pip install -r requirements.txt
           pip install bandit safety
-
       - name: SAST Bandit静态代码扫描
         run: bandit -r . || true
-
-    
-      # ========= SCA OWASP Dependency‑Check (Lab manual required tool) =========
-      - name: SCA-OWASP Dependency-Check scan
+      
+      - name: OWASP Dependency Check SCA Scan
         uses: dependency-check/Dependency-Check_Action@main
         with:
-          project: "Work1-Secure-REST-API"
-          scan: "."
-          format: "HTML"
+          project: secure-api
+          path: '.'
+          format: HTML
           out: reports
-          failOnCVSS: 10
-          autoUpdate: true
           args: >
             --enableExperimental
-            --exclude "**/.github/**"
-
-      # 上传HTML报告作为流水线产物 artifact
-      - name: Upload Dependency-Check HTML report artifact
-        uses: actions/upload-artifact@v4
-        if: success() || failure()
+      - name: Upload Dependency-Check Report
+        uses: actions/upload-artifact@v6
         with:
-          name: OWASP-Dependency-Check-Report
+          name: dependency-check-report
           path: reports
-          retention-days: 30
 
+  snyk_scan_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取仓库代码
+        uses: actions/checkout@v5
 
+      - name: 配置Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
 
+      - name: 安装Snyk CLI 和 html转换工具
+        run: |
+          npm install -g snyk
+          npm install -g snyk-to-html
 
+      - name: Snyk扫描并导出json结果
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk test --json > snyk-report.json || true
 
+      - name: 转为HTML报告
+        run: |
+          snyk-to-html -i snyk-report.json -o snyk-report.html
+
+      - name: 上传Snyk报告
+        uses: actions/upload-artifact@v6
+        with:
+          name: snyk-scan-report
+          path: snyk-report.html
