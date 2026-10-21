@@ -33,6 +33,7 @@ jobs:
           out: reports
           args: >
             --enableExperimental
+            --exclude "**/.github/**"
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v6
