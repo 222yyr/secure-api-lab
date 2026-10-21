@@ -23,10 +23,21 @@ jobs:
       - name: SAST Bandit静态代码扫描
         run: bandit -r . || true
 
-      - name: SCA Safety第三方依赖漏洞扫描
-        env:
-          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
-        run: Run safety scan || true
+    
+      - name: OWASP Dependency Check SCA Scan
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: secure-api
+          path: '.'
+          format: HTML
+          out: reports
+      - name: Upload Dependency-Check Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: reports
+
+
 
 
 
